@@ -1,0 +1,22 @@
+{
+    "name": "social-network-api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+      "start": "node server.js",
+      "watch": "nodemon"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "express": "^4.17.1",
+      "mongoose": "^6.0.13",
+      "mongoose-unique-validator": "^3.1.0"
+    },
+    "devDependencies": {
+      "nodemon": "^2.0.3"
+    }
+  }
+  
