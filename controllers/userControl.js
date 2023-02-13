@@ -1,5 +1,5 @@
 // importing models
-const { User } = require('../models')
+const { User, Thought } = require('../models')
 
 // defining functions in this constant for users
 const userFunctions = {
@@ -103,4 +103,4 @@ const userFunctions = {
 
 }
 
-module.exports = userController
+module.exports = userFunctions
