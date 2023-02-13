@@ -52,9 +52,46 @@ const userFunctions = {
     },
 
     updateUser(req, res) {
+        User.findOneAndUpdate(
+            {
+                _id: req.params.userId
+            },
+            {
+                $set: req.body
+            },
+            {
+                new: true,
+                runValidators: true
+            }
+        )
+        .then((data) => {
+            if(!data) {
+                return res.status(404).json({ message: "This ID doesn't have a user associated." })
+            }
+            res.json(data)
+        })
+        .catch((err) => {
+            console.log(err)
+            res.status(500).json(err)
+        })
     },
 
     deleteUser(req, res) {
+        User.findOneAndDelete(
+            { _id: req.params.userId }   
+        )
+        .then((data) => {
+            if (!data) {
+                return res.status(404).json({ message: "This ID doesn't have a user associated." })
+            }
+        })
+        .then(() => {
+            res.json({ message: "This user has been deleted. "})
+        })
+        .catch((err) => {
+            console.log(err)
+            res.json(500).json(err)
+        })
     },
 
     addFriend(req, res) {
