@@ -103,4 +103,4 @@ const userFunctions = {
 
 }
 
-module.exports = userController
+module.exports = userFunctions
