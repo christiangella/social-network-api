@@ -53,16 +53,71 @@ const thoughtFunctions = {
             res.json({ message: "The thought has been added to this user."})
         })
         .catch ((err) => {
-        console.log(err)
-        res.status(500).json(err)
+            console.log(err)
+            res.status(500).json(err)
         })
     },
 
     updateThought(req, res) {
-
+        Thought.findOneAndUpdate(
+            {
+                _id: req.params.thoughtId
+            },
+            {
+                $set: req.body
+            },
+            {
+                new: true,
+                runValidators: true
+            }
+        )
+        .then((data) => {
+            if (!data) {
+                return res.status(404).json({ message: "This ID doesn't have a thought associated." })
+            }
+            res.json(data)
+        })
+        .catch ((err) => {
+            console.log(err)
+            res.status(500).json(err)
+        })
     },
 
     deleteThought(req, res) {
+        Thought.findOneAndRemove(
+            {
+                _id: req.params.thoughtId
+            }
+        )
+        .then((data) => {
+            if (!data) {
+                return res.status(404).json({ message: "This ID doesn't have a thought associated." })
+            }
+
+            return User.findOneAndUpdate(
+                {
+                    thoughts: req.params.thoughtId
+                },
+                {
+                    $pull: {
+                        thoughts: req.params.thoughtId
+                    }
+                },
+                {
+                    new: true
+                }
+            )
+        })
+        .then((data) => {
+            if (!data) {
+                return res.status(404).json({ message: "The thought can be deleted, but there is no user associated with this ID."})
+            }
+            res.json({ message: "The thought has been deleted."})
+        })
+        .catch ((err) => {
+            console.log(err)
+            res.status(500).json(err)
+        })
 
     },
 
