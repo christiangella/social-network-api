@@ -16,6 +16,23 @@ const userFunctions = {
     },
 
     getOneUser(req, res) {
+        User.findOne({
+            _id: req.params.userId
+        })
+        .select('__v')
+        // populate functions can be added here
+        .then((data) => {
+            if (!data) {
+                return res.status(404).json({
+                    message: "This ID doesn't have a user associated."
+                })
+            }
+            res.json(data)
+        })
+        .catch((err) => {
+            console.log(err)
+            res.status(500).json(err)
+        })
     },
 
     // function create a user
