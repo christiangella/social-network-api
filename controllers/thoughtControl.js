@@ -122,11 +122,59 @@ const thoughtFunctions = {
     },
 
     addReaction(req, res) {
-
+        Thought.findOneAndUpdate(
+            {
+                _id: req.params.thoughtId
+            },
+            {
+                $addToSet: {
+                    reactions: req.body
+                }
+            },
+            {
+                new: true,
+                runValidators: true
+            }
+        )
+        .then((data) => {
+            if (!data) {
+                return res.status(404).json({ message: "This ID doesn't have a thought associated." })
+            }
+            res.json(data)
+        })
+        .catch ((err) => {
+            console.log(err)
+            res.status(500).json(err)
+        })
     },
 
     removeReaction(req, res) {
-
+        Thought.findOneAndUpdate(
+            {
+                _id: req.params.thoughtId
+            },
+            {
+                $pull: {
+                    reactions: {
+                        reactionId: req.params.reactionId
+                    }
+                }
+            },
+            {
+                new: true,
+                runValidators: true
+            }
+        )
+        .then((data) => {
+            if (!data) {
+                return res.status(404).json({ message: "This ID doesn't have a thought associated." })
+            }
+            res.json(data)
+        })
+        .catch ((err) => {
+            console.log(err)
+            res.status(500).json(err)
+        })
     },
 }
 
