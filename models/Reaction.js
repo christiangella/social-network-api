@@ -16,7 +16,7 @@ const reactionSchema = new Schema (
             required: true
         },
         createdAt: {
-            type: DataTransfer,
+            type: Date,
             default: Date.now,
             get: (date) => date.toLocaleString()
         }
