@@ -122,7 +122,7 @@ const userFunctions = {
         User.findOneAndUpdate(
             // uses id to specifify
             {
-                _id: req.params.UserID
+                _id: req.params.userId
             },
             // adds friend to set based on request with friendid
             {
